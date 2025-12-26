@@ -1,0 +1,46 @@
+🔐 STEP 2.1 — Create CA (ROOT TRUST)
+openssl genrsa -out ca.key 4096
+
+openssl req -x509 -new -nodes ^
+  -key ca.key ^
+  -sha256 -days 365 ^
+  -subj "/CN=Internal-CA" ^
+  -out ca.crt
+
+
+✅ This CA signs both server and client certs
+
+🔐 STEP 2.2 — Auth Server certificate (WITH localhost)
+openssl genrsa -out auth-server.key 2048
+
+openssl req -new   -key auth-server.key   -subj "/CN=localhost"   -out auth-server.csr
+
+
+Now sign it with SAN 👇
+
+openssl x509 -req -in auth-server.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out auth-server.crt -days 365 -sha256 -extfile ext.cnf
+
+
+✅ This fixes TLS hostname mismatch (CRITICAL)
+
+🔐 STEP 2.3 — Client Backend certificate
+openssl genrsa -out client.key 2048
+
+openssl req -new   -key client.key   -subj "/CN=client-backend"   -out client.csr
+
+
+Sign it:
+
+openssl x509 -req   -in client.csr   -CA ca.crt   -CAkey ca.key   -CAcreateserial   -out client.crt   -days 365   -sha256
+
+✅ FINAL mtls/ FOLDER CONTENT
+mtls/
+├── ca.crt
+├── ca.key
+├── auth-server.crt
+├── auth-server.key
+├── client.crt
+├── client.key
+
+
+🚨 DO NOT COMMIT THIS FOLDER
