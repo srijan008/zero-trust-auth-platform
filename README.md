@@ -1,97 +1,73 @@
-# 🔐 Zero-Trust Authentication Platform
+# 🔐 Rate Limiter & Zero-Trust SSO Platform
 
 ## Overview
-This project is a **Zero-Trust Authentication Platform** built as an extension of my prior backend and security-focused work. It implements **modern, production-grade authentication and authorization patterns** used in real-world systems, combining **strong identity verification, secure token flows, and infrastructure-level trust controls**.
+This project is a **Rate Limiter & Zero-Trust Single Sign-On (SSO) Platform** built to demonstrate a **production-grade authentication, authorization, and traffic-control system**. It enables secure access across multiple client applications while strictly enforcing Zero-Trust security principles.
 
-The platform follows the Zero-Trust principle:
+The platform integrates **OAuth 2.0 (PKCE)**, **mutual TLS (mTLS)**, **asymmetric JWTs**, and **Redis-based rate limiting**, closely reflecting architectures used in modern SaaS and enterprise systems.
 
-> **Never trust implicitly. Verify every user, service, and request.**
-
-## Who Is This Project For?
-- 🔐 **Backend & Security engineers**
-- ☁️ **Cloud / Platform / IAM-focused developers**
-- 💼 **Interview preparation** for Backend, Security, SRE, or Platform roles
-- 🧠 Engineers looking for **practical Zero-Trust implementations**, not theory
-
-## 📌 Project Objective
-To design and build a **corporate-grade Zero-Trust authentication system** that:
-- Verifies identity at every access point
-- Uses secure OAuth flows and short-lived tokens
-- Enforces service-to-service trust
-- Scales reliably using background job processing
+## Key Objectives
+- Provide secure **Single Sign-On (SSO)** for multiple client applications  
+- Enforce **Zero-Trust** access at both user and service levels  
+- Protect APIs against abuse using **rate limiting**  
+- Prevent common security attacks such as token replay and SSRF  
 
 ## ⚙️ Core Features
 
-### ✅ Identity & Authentication
-- **Google OAuth Login** for secure third-party authentication
-- Secure local authentication with hashed credentials
-- Unified identity handling across login methods
+### ✅ Single Sign-On (SSO)
+- Centralized authentication for multiple client applications  
+- Unified user identity across services  
+- Secure session and token management  
 
 ### ✅ OAuth 2.0 with PKCE
-- Authorization Code Flow with **PKCE**
-- Protection against authorization code interception
-- Secure login flow for public clients (web & SPA)
+- Authorization Code Flow with **PKCE** for public clients  
+- Protection against authorization code interception  
+- Secure login flow for web applications  
 
-### ✅ Token-Based Authorization
-- **JWT access tokens** with short expiry
-- Refresh token rotation
-- Token validation on **every request**
+### ✅ Token-Based Security
+- **Asymmetric JWTs** for access tokens  
+- Short-lived access tokens with refresh token rotation  
+- **Global session revocation** across all connected client apps  
 
-### ✅ Zero-Trust Access Enforcement
-- No implicit trust based on session or network
-- Mandatory authentication for every API call
-- Fine-grained authorization checks
+### ✅ Zero-Trust Backend Communication
+- **Mutual TLS (mTLS)** for service-to-service authentication  
+- Eliminates implicit trust between internal services  
+- Prevents token replay and SSRF attacks  
 
-### ✅ mTLS (Mutual TLS)
-- **Service-to-service authentication** using mTLS
-- Certificate-based trust between internal services
-- Prevents unauthorized internal access
+### ✅ Rate Limiting & Traffic Control
+- Rate limiting using **Redis** and **BullMQ**  
+- **Leaky Bucket algorithm** implementation  
+- Per-IP and per-user throttling to prevent abuse and DDoS-style traffic  
 
-### ✅ Redis & BullMQ
-- **Redis** for token/session caching and rate-limiting
-- **BullMQ** for background jobs:
-  - Email verification
-  - Token cleanup
-  - Security event logging
-
-### ✅ Role & Policy Management
-- Role-Based Access Control (RBAC)
-- Policy-driven permission checks
-- Extensible for Attribute-Based Access Control (ABAC)
-
-## 🧠 Concepts Demonstrated
-- Zero-Trust Security Architecture
-- OAuth 2.0 Authorization Code Flow
-- PKCE (Proof Key for Code Exchange)
-- JWT lifecycle & refresh token rotation
-- Mutual TLS (mTLS)
-- Secure service-to-service communication
-- Asynchronous processing with BullMQ
-- Caching and rate-limiting with Redis
+## 🧠 Security & System Design Concepts
+- Zero-Trust Architecture  
+- OAuth 2.0 Authorization Code Flow  
+- PKCE (Proof Key for Code Exchange)  
+- Asymmetric JWT signing and verification  
+- Refresh token rotation & session invalidation  
+- Mutual TLS (mTLS)  
+- Rate limiting algorithms (Leaky Bucket)  
 
 ## 🛠️ Tech Stack
-- 🟢 **Node.js & Express** – Core authentication APIs  
-- 🔐 **OAuth 2.0 & PKCE** – Secure authorization flows  
-- 🪪 **Google OAuth** – Third-party identity provider  
-- 🔑 **JWT** – Stateless access tokens  
-- 🗄️ **Redis** – Caching, rate-limiting, session management  
-- ⚙️ **BullMQ** – Background job processing  
-- 🔒 **mTLS** – Internal service authentication  
-- 🧾 **Database (SQL)** – Users, roles
+- ⚛️ **React** – Client applications  
+- 🟢 **Node.js & Express** – Authentication and SSO APIs  
+- 🗄️ **PostgreSQL** – User, client, and session data  
+- 🔐 **OAuth 2.0 & PKCE** – Secure authentication flow  
+- 🪪 **JWT (Asymmetric Keys)** – Token-based authorization  
+- 🗄️ **Redis** – Rate limiting and caching  
+- ⚙️ **BullMQ** – Distributed rate-limiting and background jobs  
+- 🔒 **mTLS** – Secure service-to-service communication  
 
 ## 📦 Deliverables
-- Zero-Trust authentication service
-- OAuth + PKCE login flow
-- Google login integration
-- JWT issuance, rotation, and validation
-- Redis-backed caching and rate-limiting
-- BullMQ background workers
-- mTLS-secured internal APIs
-- Security-focused documentation
+- Zero-Trust SSO authentication service  
+- OAuth 2.0 + PKCE implementation  
+- Secure token lifecycle management  
+- Redis-backed rate limiter with BullMQ  
+- mTLS-secured backend services  
+- Technical documentation and architecture notes  
 
 ## 🚀 Learning Outcomes
-- End-to-end understanding of Zero-Trust systems
-- Hands-on experience with OAuth, PKCE, and mTLS
-- Real-world scaling patterns using Redis and BullMQ
-- Interview-ready security and backend platform project
-- Strong foundation for enterprise IAM and SSO systems
+- Hands-on experience building enterprise-grade SSO systems  
+- Deep understanding of Zero-Trust security principles  
+- Practical implementation of OAuth, PKCE, and mTLS  
+- Scalable rate-limiting strategies using Redis  
+- Interview-ready project for backend, security, and platform roles  
